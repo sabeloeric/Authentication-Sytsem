@@ -1,0 +1,45 @@
+body, html{
+    background-color: blueviolet;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 100%;
+}
+
+h1{
+    position: absolute;
+    left: 41%;
+    text-align: center;
+    color: rgb(200, 220, 243);
+
+}
+
+#editform label{
+    display: inline-block;
+}
+#editform input{
+    position: absolute;
+    left: 40%;
+}
+
+.create_user_field{
+    display: flex;  
+    flex-direction: column;
+    background-color: aliceblue;
+    padding: 40px 30px 30px 30px;
+    border-radius: 10px;
+    position: absolute;
+    top: 20%;
+    left: 35%;
+    width: 30%; 
+}
+
+.button{
+    position: relative;
+    left: 35%;
+    margin: 10px;
+    width: 30%;
+  
+    border-radius: 5px;
+    
+}
