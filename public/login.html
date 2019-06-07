@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>User Login</title>
+<link rel = "stylesheet" type = "text/css" href = "style.css" />
+</head>
+
+<body>
+
+<div class="bg-image"></div>
+
+<form id="login_form" class="create_user_field" autocomplete="off" action="http://localhost:8000/logging_in" method="POST" >
+
+    <label for="email"><b>Email</b></label>
+    <input type="text" placeholder="Enter email" name="email" required>
+
+    <label for="psw"><b>Password</b></label>
+    <input type="password" placeholder="Enter password" name="psw" required>
+
+  
+    <button type="submit" onclick="loginButton()" class="button">LOG IN</button>
+    
+    <p>New here? <a href="./index.html">Create Account</a> </p>
+    
+</form>
+
+ 
+
+<script type="text/javascript" src="app.js"></script>
+
+</body>
+</html>
