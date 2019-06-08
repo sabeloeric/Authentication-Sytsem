@@ -26,36 +26,47 @@ app.post('/create-profile',(req, res, next)=>{
         degree: req.body.degree,
         favouriteCourse: req.body.course,
         password: req.body.psw
-
     }
 
     console.log(userObj)
     insertToDatabase(userObj)
     res.redirect('/login')
-    
 })
 
 app.get('/login', (req, res)=>{
     res.sendFile(path.join(__dirname+'/public/login.html'))
-    
 })
 
 app.post('/logging_in',(req, res)=>{
+    
+    //login details from user
     const userLoginObj = {
-        email : req.params.email,
+        email : req.body.email,
         password: req.body.psw
     }
-   
-    //if user is found in database
-    if((findUserinDatabase(userLoginObj).length) > 0){  
-        res.redirect('/login_successful') 
-    }
-    else{
-        res.redirect('/login_failed')
-    }
 
-    console.log(userLoginObj)
+    //find user in database
+    MongoClient.connect(url,{useNewUrlParser:true}, function(err, db) {
+        if (err) throw err;
+        var dbo = db.db("UserProfile");
+        dbo.collection("AuthSystem_users").find(userLoginObj).toArray(function(err, result) {
+        if (err) throw err;
+           
+               //if user is found in database
+                if((result.length) > 0){ 
+                    console.log('This user is logged in ' + JSON.stringify(result)) 
+                    res.redirect('/login_successful') 
+                }
+                else{
+                    res.redirect('/login_failed')
+                }
+
+            db.close()
+        });
+    });  
 })
+
+
 
 app.get('/login_failed', (req, res)=>{
     res.json({msg : 'login failed'})
@@ -65,22 +76,6 @@ app.get('/login_successful', (req, res)=>{
 })
 
 
-
-function findUserinDatabase(query){
-    let userArr = []; 
-    MongoClient.connect(url,{useNewUrlParser:true}, function(err, db) {
-        if (err) throw err;
-        var dbo = db.db("UserProfile");
-        //var query = { address: "Park Lane 38" };
-        dbo.collection("AuthSystem_users").find(query).toArray(function(err, result) {
-          if (err) throw err;
-          userArr = result;
-          db.close();
-        });
-      });
-
-    return userArr
-}
 
 function insertToDatabase (myobj){
   MongoClient.connect(url,{useNewUrlParser:true}, function(err, db) {
